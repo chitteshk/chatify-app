@@ -58,7 +58,17 @@ A full-stack chat application with a React + Vite frontend and an Express + Mong
 - `backend/` — Express server and API
 
 ## Environment Variables
-- Backend uses `.env` for configuration. See `backend/.env.example` if available.
+
+The backend requires a `.env` file in the `backend/` directory with the following variables:
+
+```env
+PORT=3000                        # Port for the backend server
+MONGO_URI=your_mongodb_uri       # MongoDB connection string (see Atlas dashboard)
+NODE_ENV=development             # Set to 'development' or 'production'
+JWT_SECRET=your_jwt_secret       # Secret key for JWT signing
+```
+
+You can use `backend/.env.example` as a template if available.
 
 ## License
 MIT
