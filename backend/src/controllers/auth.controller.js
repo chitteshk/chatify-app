@@ -6,6 +6,18 @@ export const signup = async (req, res) => {
   try {
     const { fullName, email, password } = req.body;
 
+    // Email validation regex
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    // Password validation regex: min 8 chars, at least 1 letter, 1 number
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=]{8,}$/;
+
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Invalid email format." });
+    }
+    if (!passwordRegex.test(password)) {
+      return res.status(400).json({ message: "Password must be at least 8 characters long and contain at least one letter and one number." });
+    }
+
     const user = await User.findOne({ email });
     if (user)
       return res.status(400).json({
@@ -24,7 +36,7 @@ export const signup = async (req, res) => {
 
     if (newUser) {
       await newUser.save();
-       generateToken(newUser._id,res);
+      generateToken(newUser._id, res);
 
       res.status(201).json({
         _id: newUser._id,
